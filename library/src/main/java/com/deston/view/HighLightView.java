@@ -20,8 +20,8 @@ public class HighLightView {
     private int mImageWidth;
     private int mImageTop;
     private int mImageLeft;
-    private float mPreX;
-    private float mPreY;
+    private float mLastMotionX;
+    private float mLastMotionY;
     private Rect mRectBound = new Rect();
     private int mTouchArea;//触摸区域
     private float mRectEdgeWidth;
@@ -43,15 +43,15 @@ public class HighLightView {
         int action = event.getAction();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                mPreX = event.getX();
-                mPreY = event.getY();
+                mLastMotionX = event.getX();
+                mLastMotionY = event.getY();
                 mTouchArea = getTouchArea(event);
                 break;
             case MotionEvent.ACTION_MOVE:
             case MotionEvent.ACTION_UP:
-                handleMoveEvent(mPreX, mPreY, event.getX(), event.getY(), mTouchArea);
-                mPreX = event.getX();
-                mPreY = event.getY();
+                handleMoveEvent(mLastMotionX, mLastMotionY, event.getX(), event.getY(), mTouchArea);
+                mLastMotionX = event.getX();
+                mLastMotionY = event.getY();
                 break;
         }
 
@@ -209,19 +209,19 @@ public class HighLightView {
 
 
     public float getRectTop() {
-        return mRectCenterY - mEdgeLength / 2;
+        return mRectBound.top;
     }
 
     public float getRectBottom() {
-        return mRectCenterY + mEdgeLength / 2;
+        return mRectBound.bottom;
     }
 
     public float getRectLeft() {
-        return mRectCenterX - mEdgeLength / 2;
+        return mRectBound.left;
     }
 
     public float getRectRight() {
-        return mRectCenterX + mEdgeLength / 2;
+        return mRectBound.right;
     }
 
     public float getRectLength() {
