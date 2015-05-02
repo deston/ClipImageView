@@ -1,2 +1,2 @@
 # ClipImageView
-A componet to clip bitmap.
+A component to clip bitmap.
